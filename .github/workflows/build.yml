@@ -23,7 +23,7 @@ jobs:
     - name: Build
       run: |
         cd backend
-        go build -v -o server ./main.go
+        go build -v -o server ./server.go
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
