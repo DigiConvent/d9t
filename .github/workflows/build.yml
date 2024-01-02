@@ -2,6 +2,8 @@ name: Go Server Build
 
 on:
   push:
+    branches:
+      - main
     tags:
       - '*'
 
@@ -21,7 +23,8 @@ jobs:
     - name: Build
       run: |
         cd backend
-        go build -v -o server ./server.go
+        go build -v -o server_linux ./server.go
+        GOOS=darwin GOARCH=amd64 go build -v -o server_m1 ./server.go
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
