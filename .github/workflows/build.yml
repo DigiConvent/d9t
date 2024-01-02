@@ -69,4 +69,4 @@ jobs:
       with:
         name: sql-migrations
         path: |
-          database/migrations/**/*.sql
+          backend/database/migrations/**/*.sql
