@@ -39,12 +39,17 @@ jobs:
         npm run build
         cd ..
 
+    - name: Copy results to root folder
+      run: |
+        mkdir release
+        cp backend/server_linux release/
+        cp backend/server_m1 release/
+        cp -r backend/database/migrations release/
+        cp frontend/dist/* release/static
+        
     - name: Upload artifacts zip
       uses: actions/upload-artifact@v2
       with:
         name: release
         path: |
-          backend/server_linux
-          backend/server_m1
-          frontend/dist/*
-          backend/database/migrations
+          release/*
