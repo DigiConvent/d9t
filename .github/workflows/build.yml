@@ -45,7 +45,7 @@ jobs:
         cp -R backend/database/migrations/**/*.sql migrations/
 
     - name: Zip Artifacts
-      run: zip -r artifacts.zip backend/server frontend/dist migrations
+      run: zip -r release.zip backend/server frontend/dist migrations
 
     - name: Upload Artifacts Zip
       uses: actions/upload-artifact@v2
