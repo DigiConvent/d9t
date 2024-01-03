@@ -39,16 +39,12 @@ jobs:
         npm run build
         cd ..
 
-    - name: Prepare SQL Migrations
-      run: |
-        mkdir migrations
-        cp -R backend/database/migrations/**/*.sql migrations/
-
-    - name: Zip Artifacts
-      run: zip -r release.zip backend/server frontend/dist migrations
-
-    - name: Upload Artifacts Zip
+    - name: Upload artifacts zip
       uses: actions/upload-artifact@v2
       with:
-        name: bundled-artifacts
-        path: release.zip
+        name: release
+        path: |
+          backend/server_linux
+          backend/server_m1
+          frontend/dist/*
+          backend/database/migrations
