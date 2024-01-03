@@ -52,22 +52,36 @@ jobs:
       run: npm run build
       working-directory: ./frontend
 
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: vue3-frontend
-        path: frontend/dist  # Assuming the built files are in the 'dist' folder
-
-  database_migrations:
-    name: Upload Migrations
+  build-and-package:
+    name: Build and Package Artifacts
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
 
-    - name: Upload Migration Files
+    - name: Build Golang Server
+      run: |
+        cd backend
+        GOOS=darwin GOARCH=amd64 go build -v -o server ./main.go
+        cd ..
+
+    - name: Build Vue3 Frontend
+      run: |
+        cd frontend
+        npm install
+        npm run build
+        cd ..
+
+    - name: Prepare SQL Migrations
+      run: |
+        mkdir migrations
+        cp -R database/migrations/**/*.sql migrations/
+
+    - name: Zip Artifacts
+      run: zip -r artifacts.zip backend/server frontend/dist migrations
+
+    - name: Upload Artifacts Zip
       uses: actions/upload-artifact@v2
       with:
-        name: sql-migrations
-        path: |
-          backend/database/migrations/**/*.sql
+        name: bundled-artifacts
+        path: release.zip
