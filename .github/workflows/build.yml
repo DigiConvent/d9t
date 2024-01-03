@@ -46,9 +46,32 @@ jobs:
         cp -r frontend/dist/* release/frontend
         cp -r backend/database/migrations release/
         
+    - name: Zip release folder
+      run: zip -r release.zip release
+      
     - name: Upload artifacts zip
       uses: actions/upload-artifact@v2
       with:
         name: release
-        path: |
-          release/*
+        path: release
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: false
+        prerelease: false
+
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./release.zip
+        asset_name: release.zip
+        asset_content_type: application/zip
