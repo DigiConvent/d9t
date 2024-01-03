@@ -42,10 +42,11 @@ jobs:
     - name: Copy results to root folder
       run: |
         mkdir release
+        mkdir release/frontend
         cp backend/server_linux release/
         cp backend/server_m1 release/
+        cp -r frontend/dist/* release/frontend
         cp -r backend/database/migrations release/
-        cp frontend/dist/* release/static
         
     - name: Upload artifacts zip
       uses: actions/upload-artifact@v2
