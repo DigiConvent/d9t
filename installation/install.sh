@@ -33,3 +33,10 @@ curl -L -o "release.zip" "$ASSET_URL"
 rm -rf release/
 unzip release.zip
 rm release.zip
+
+curl -L -o https://raw.githubusercontent.com/DigiConvent/d9t/$TAG/installation/digiconvent.service
+sudo cp digiconvent.service /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl enable digiconvent.service
+sudo systemctl start digiconvent.service
+sudo systemctl status digiconvent.service
