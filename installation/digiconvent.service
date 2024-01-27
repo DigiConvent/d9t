@@ -1,0 +1,12 @@
+[Unit]
+Description=DigiConvent Server
+After=network.target
+
+[Service]
+Type=simple
+User=<username>
+ExecStart=/home/digiconvent/server
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
