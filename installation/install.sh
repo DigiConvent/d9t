@@ -10,11 +10,29 @@ else
     echo "User $USERNAME already exists, skipping step 1..."
 fi
 
+# Check if jq is installed
+if ! command -v jq &> /dev/null; then
+    echo "jq is not installed. Installing jq..."
+    sudo apt-get update
+    sudo apt-get install -y jq
+else
+    echo "jq is already installed."
+fi
+
+# Check if unzip is installed
+if ! command -v unzip &> /dev/null; then
+    echo "unzip is not installed. Installing unzip..."
+    sudo apt-get update
+    sudo apt-get install -y unzip
+else
+    echo "unzip is already installed."
+fi
+
 REPO_URL="https://github.com/DigiConvent/d9t.git"
 
 if [ "$#" -ne 1 ]; then 
     echo "No version specified"
-    echo "Available versions:\nlatest"
+    echo -e "Available versions:\nlatest"
     git ls-remote --tags $REPO_URL | awk -F'/' '{print $3}' | sed '/^\s*$/d'
     exit 1
 fi
@@ -40,6 +58,12 @@ curl -L -o "release.zip" "$ASSET_URL"
 rm -rf release/
 unzip release.zip
 rm release.zip
+
+# store binaries in the correct folders
+mkdir /opt/digiconvent/
+mv server_linux /opt/digiconvent/server_linux
+mv server_m1 /opt/digiconvent/server_m1
+chown -R digiconvent:digiconvent /opt/digiconvent/
 
 curl -L -o https://raw.githubusercontent.com/DigiConvent/d9t/$TAG/installation/digiconvent.service
 sudo cp digiconvent.service /etc/systemd/system/
