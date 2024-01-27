@@ -67,8 +67,8 @@ mv server_linux /opt/digiconvent/server_linux
 mv server_m1 /opt/digiconvent/server_m1
 chown -R digiconvent:digiconvent /opt/digiconvent/
 
-curl -L -o digiconvent.service https://raw.githubusercontent.com/DigiConvent/d9t/$TAG/installation/digiconvent.service
-sudo cp digiconvent.service /etc/systemd/system/
+curl -L -o digiconvent.service https://raw.githubusercontent.com/DigiConvent/d9t/main/installation/digiconvent.service
+sudo cp digiconvent.service /etc/systemd/
 sudo systemctl daemon-reload
 sudo systemctl enable digiconvent.service
 sudo systemctl start digiconvent.service
