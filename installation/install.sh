@@ -1,11 +1,18 @@
 #!/bin/bash
+USERNAME="digiconvent"
 
-# prepare environment
-sudo useradd -m digiconvent
+# Check if the user exists
+if ! id "$USERNAME" &>/dev/null; then
+    echo "Step 1: User $USERNAME does not exist, creating..."
+    sudo useradd -m "$USERNAME"
+    # You can also set a password for the user if required using sudo passwd $USERNAME
+else
+    echo "User $USERNAME already exists, skipping step 1..."
+fi
 
 REPO_URL="https://github.com/DigiConvent/d9t.git"
 
-if [ "#$" -neq 1 ]; then 
+if [ "$#" -ne 1 ]; then 
     echo "No version specified"
     echo "Available versions:\nlatest"
     git ls-remote --tags $REPO_URL | awk -F'/' '{print $3}' | sed '/^\s*$/d'
