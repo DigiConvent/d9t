@@ -60,12 +60,14 @@ unzip release.zip
 rm release.zip
 
 # store binaries in the correct folders
+rm -rf /opt/digiconvent/
+
 mkdir /opt/digiconvent/
 mv server_linux /opt/digiconvent/server_linux
 mv server_m1 /opt/digiconvent/server_m1
 chown -R digiconvent:digiconvent /opt/digiconvent/
 
-curl -L -o https://raw.githubusercontent.com/DigiConvent/d9t/$TAG/installation/digiconvent.service
+curl -L -o digiconvent.service https://raw.githubusercontent.com/DigiConvent/d9t/$TAG/installation/digiconvent.service
 sudo cp digiconvent.service /etc/systemd/system/
 sudo systemctl daemon-reload
 sudo systemctl enable digiconvent.service
