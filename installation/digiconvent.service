@@ -5,7 +5,7 @@ After=network.target
 [Service]
 Type=simple
 User=digiconvent
-ExecStart=/opt/digiconvent/server
+ExecStart=/opt/digiconvent/server_linux
 Restart=always
 StandardOutput=journal
 StandardError=inherit

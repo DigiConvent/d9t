@@ -63,8 +63,8 @@ rm release.zip
 rm -rf /opt/digiconvent/
 
 mkdir /opt/digiconvent/
-mv server_linux /opt/digiconvent/server_linux
-mv server_m1 /opt/digiconvent/server_m1
+mv release/server_linux /opt/digiconvent/
+mv release/server_m1 /opt/digiconvent/
 chown -R digiconvent:digiconvent /opt/digiconvent/
 
 curl -L -o digiconvent.service https://raw.githubusercontent.com/DigiConvent/d9t/main/installation/digiconvent.service
